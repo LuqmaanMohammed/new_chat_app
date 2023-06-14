@@ -15,10 +15,14 @@ class _ChatingPageState extends State<ChatingPage> {
   List<String> messages = [];
   List<Contact> selectedContacts = [];
   TextEditingController _messageController = TextEditingController();
+  bool isOne = false;
+  String DisplayedName = '';
 
   void addContact(Contact contact) {
     setState(() {
+      isOne = true;
       selectedContacts.add(contact);
+      DisplayedName = '$DisplayedName,${contact.name}';
     });
   }
 
@@ -53,7 +57,9 @@ class _ChatingPageState extends State<ChatingPage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.contact.name),
+            Text(isOne
+                ? DisplayedName
+                : DisplayedName = '${widget.contact.name},$DisplayedName'),
             const Text(
               'Online',
               style: TextStyle(

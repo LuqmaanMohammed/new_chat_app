@@ -1,5 +1,6 @@
 import 'package:chat_app/screens/chatting_page.dart';
 import 'package:flutter/material.dart';
+//import 'tooltip';
 
 class ContactListPage extends StatelessWidget {
   final List<Contact> contacts = [
@@ -54,9 +55,9 @@ class ContactListPage extends StatelessWidget {
             ),
             title: GestureDetector(
               onTap: () {
-              onContactSelected(contact);
-              Navigator.pop(context);
-                // Navigate to the chat page of the contact
+                onContactSelected(contact);
+                Navigator.pop(context);
+                // Navigate to the chat page of the contact pop it and then go to the chatting page using nav.push
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -64,13 +65,27 @@ class ContactListPage extends StatelessWidget {
                   ),
                 );
               },
-              child: Text(
-                contact.name,
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
+              child: Tooltip(
+                message: 'Start a new chat',
+                child: Text(
+                  contact.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-              
+            ),
+            trailing: IconButton(
+              icon: const Icon(
+                Icons.group_add,
+                size: 30,
+              ),
+              tooltip: 'add to existing group',
+              onPressed: () {
+                onContactSelected(contact);
+                Navigator.pop(context, contact);
+                // Navigate  to the chatting page using nav.pop and add the returned contact to list
+              },
             ),
           );
         },
