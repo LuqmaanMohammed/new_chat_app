@@ -21,9 +21,21 @@ class _ChatingPageState extends State<ChatingPage> {
   void addContact(Contact contact) {
     setState(() {
       isOne = true;
-      selectedContacts.add(contact);
-      DisplayedName = '$DisplayedName,${contact.name}';
+      if (!DisplayedName.contains(contact.name)) {
+        selectedContacts.add(contact);
+        if (DisplayedName.isEmpty) {
+          DisplayedName = contact.name;
+        } else {
+          DisplayedName = '$DisplayedName, ${contact.name}';
+        }
+      }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    DisplayedName = widget.contact.name;
   }
 
   @override
@@ -57,9 +69,13 @@ class _ChatingPageState extends State<ChatingPage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(isOne
-                ? DisplayedName
-                : DisplayedName = '${widget.contact.name},$DisplayedName'),
+            // Text(isOne
+            //     ? DisplayedName
+            //     : DisplayedName = '${widget.contact.name},$DisplayedName'),
+            //if (isOne && DisplayedName.isNotEmpty) Text(DisplayedName),
+            Text(
+              isOne ? DisplayedName : widget.contact.name,
+            ),
             const Text(
               'Online',
               style: TextStyle(
